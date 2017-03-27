@@ -1,0 +1,13 @@
+{
+  "name": "student-teacher-api",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "crypto": "0.0.3",
+    "express": "^4.15.2",
+    "jsonwebtoken": "^5.7.0",
+    "mongoose": "^4.9.2",
+    "morgan": "^1.8.1",
+    "node-uuid": "^1.4.8"
+  }
+}
