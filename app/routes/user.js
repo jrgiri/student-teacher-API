@@ -28,12 +28,19 @@ exports.studentSignUp = function (req, res) {
 	data.password= crypto.createHash('md5').update(data.password).digest("hex");
 	console.log("pwd"+data.password);
 	data.roles='student';
-	User.create(data, function(err, user){
-		if (err) throw err;
-		console.log('User Added');
-		var id = user._id;
-		res.end('Added User'+id);
+	User.find({email:data.email}, function(err, user){
+		if(user && user.length>0){
+			res.send(401, {error: 'email id already registered'});
+		}else{
+			User.create(data, function(err, user){
+				if (err) throw err;
+				console.log('User Added');
+				var id = user._id;
+				res.end('Added User'+id);
+			});
+		}
 	});
+	
 };
 
 exports.teacherSignUp = function (req, res) {
@@ -41,11 +48,17 @@ exports.teacherSignUp = function (req, res) {
 	data.password= crypto.createHash('md5').update(data.password).digest("hex");
 	console.log("pwd"+data.password);
 	data.roles='teacher';
-	User.create(data, function(err, user){
-		if (err) throw err;
-		console.log('User Added');
-		var id = user._id;
-		res.end('Added User'+id);
+	User.find({email:data.email}, function(err, user){
+		if(user && user.length>0){
+			res.send(401, {error: 'email id already registered'});
+		}else{
+				User.create(data, function(err, user){
+				if (err) throw err;
+				console.log('User Added');
+				var id = user._id;
+				res.end('Added User'+id);
+			});
+		}
 	});
 };
 
@@ -58,7 +71,7 @@ exports.login = function (req, res) {
 	var pwd = crypto.createHash('md5').update(password).digest("hex");
 	User.find({email:email,password:pwd}, function(err, user){
 		if (err){
-		 res.send(401, {error: 'Invalid User'});
+		 res.send(401, {error: 'Invalid user name or password'});
 		}else{
 			console.log("user"+JSON.stringify(user));
 			var userObject = {
