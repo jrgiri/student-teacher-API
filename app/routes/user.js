@@ -61,19 +61,22 @@ exports.teacherSignUp = function (req, res) {
 		}
 	});
 };
-
-
-
-
+	
 exports.login = function (req, res) {
     var email=req.body.email;
     var password = req.body.password;
 	var pwd = crypto.createHash('md5').update(password).digest("hex");
 	User.find({email:email,password:pwd}, function(err, user){
+<<<<<<< HEAD
 		if (err){
 		 res.send(401, {error: 'Invalid user name or password'});
+=======
+		if (err) {
+			throw err;
+		}else if(user && user.length<1){
+			res.send(401, {error: 'Invalid user name or password'});
+>>>>>>> c24771f5fa2047af1e0bedc55e6aa8ea11460268
 		}else{
-			console.log("user"+JSON.stringify(user));
 			var userObject = {
 				name: user[0].name || '',
 				email:user[0].email || '',
