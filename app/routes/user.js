@@ -70,7 +70,7 @@ exports.login = function (req, res) {
     var password = req.body.password;
 	var pwd = crypto.createHash('md5').update(password).digest("hex");
 	User.find({email:email,password:pwd}, function(err, user){
-		if (err || user.length<1){
+		if (err){
 		 res.send(401, {error: 'Invalid user name or password'});
 		}else{
 			console.log("user"+JSON.stringify(user));
